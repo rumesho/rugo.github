@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Details and Photos</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hero img {
+            max-width: 150px;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #4facfe;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .hero button:hover {
+            background-color: #00f2fe;
+            color: #fff;
+        }
+
+        .section {
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .photo-container, .video-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .photo-container img, .video-container video {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-container img:hover, .video-container video:hover {
+            transform: scale(1.05);
+        }
+
+        input[type="file"], button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .photo-container img, .video-container video {
+                max-width: 100%;
+            }
+
+            .section {
+                padding: 20px;
+            }
+        }
+
+        /* Smaller Screens (Tablets) */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 10px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .photo-container, .video-container {
+                grid-template-columns: 1fr; /* Stack photos/videos vertically */
+            }
+
+            input[type="file"], button {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+</head>
+<body>
+    <section class="hero">
+        <img src="re.png" alt="Profile Image">
+        <h1>Welcome to My Personal Website!</h1>
+        <p>Discover more about me, view my photos, and watch my videos.</p>
+        <button onclick="scrollToSection('personal-details')">Learn More</button>
+    </section>
+
+    <section class="section" id="personal-details">
+        <h2>Details</h2>
+        <h3>Seshan Dasun</h3>
+        <p>Email: Seshan@gmail.com</p>
+        <p>Phone: +94 76 020 3914</p>
+    </section>
+
+    <section class="section">
+        <h2>Photos</h2>
+        <div class="photo-container">
+            <img src="WhatsApp Image 2025-02-07 at 13.50.53_38bb4578.jpg" alt="Photo 1">
+            <img src="WhatsApp Image 2025-02-07 at 13.50.54_67e2b1f4.jpg" alt="Photo 2">
+            <img src="WhatsApp Image 2025-02-07 at 13.50.54_8e42dd07.jpg" alt="Photo 3">
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Videos</h2>
+        <div class="video-container" id="videoContainer"></div>
+        <input type="file" id="videoInput" accept="video/*">
+        <button onclick="uploadVideo()">Upload Video</button>
+    </section>
+</body>
+</html>
